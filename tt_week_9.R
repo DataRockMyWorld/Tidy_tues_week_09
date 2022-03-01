@@ -15,3 +15,13 @@ tidytue <- tt_load("2022-03-01")
 
 stations <- tidytue$stations
 stations
+
+## Exploring & Cleaning the Data ----
+skim(stations)
+
+# From skimming through, the logical variables have all their rows missing hence/n
+# we can take them out
+
+stations1 <- stations %>% select_if(~!is.logical(.))
+
+unique(stations1$FUEL_TYPE_CODE)
