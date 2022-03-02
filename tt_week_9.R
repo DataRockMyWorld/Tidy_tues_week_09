@@ -7,6 +7,7 @@
 library(tidytuesdayR)
 library(tidyverse)
 library(skimr)
+library(gghighlight)
 
 
 ## Importing the Data ----
@@ -24,4 +25,21 @@ skim(stations)
 
 stations1 <- stations %>% select_if(~!is.logical(.))
 
-unique(stations1$FUEL_TYPE_CODE)
+## selecting the columns that i need.
+
+station2 <- stations1 %>% select(FUEL_TYPE_CODE,STATION_NAME,STREET_ADDRESS,
+                                 CITY,STATE,CARDS_ACCEPTED,OWNER_TYPE_CODE,COUNTRY,
+                                 LONGITUDE,LATITUDE)
+
+# change names to lower
+station2 %>% 
+  ggplot(aes(LONGITUDE,LATITUDE))+
+  geom_polygon()
+
+
+
+
+
+
+stations1 %>% count(FUEL_TYPE_CODE)
+
