@@ -8,7 +8,7 @@ library(tidytuesdayR)
 library(tidyverse)
 library(skimr)
 library(gghighlight)
-
+library(usdata)
 
 ## Importing the Data ----
 
@@ -31,9 +31,24 @@ station2 <- stations1 %>% select(FUEL_TYPE_CODE,STATION_NAME,STREET_ADDRESS,
                                  CITY,STATE,CARDS_ACCEPTED,OWNER_TYPE_CODE,COUNTRY,
                                  LONGITUDE,LATITUDE)
 
+
+
+state_abb <- data.frame(STATE_NAME = state.name,STATE = state.abb)
+
+
+station3 <- station2 %>% inner_join(state_abb,by = "STATE") %>% 
+  mutate(region = tolower(STATE_NAME))
+
+
+
+us_geo <- map_data("state")
+
+station_final <- station3 %>% full_join(us_geo, by = "region")
+
+
 # change names to lower
-station2 %>% 
-  ggplot(aes(LONGITUDE,LATITUDE))+
+station_final %>% 
+  ggplot(aes(long,lat, group = group))+
   geom_polygon()
 
 
