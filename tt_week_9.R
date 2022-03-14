@@ -25,7 +25,7 @@ showtext_auto()
 tidytue <- tt_load("2022-03-01")
 
 stations <- tidytue$stations
-stations
+head(stations)
 
 ## Exploring & Cleaning the Data ----
 skim(stations)
@@ -74,37 +74,51 @@ station_df
   
 # Plot
 
-ggplot() +
+af_plot <- ggplot() +
   geom_sf(data = states_shp, fill= "#474649", color = "#bde162") +
   geom_sf(data = station_df, aes(color = fuel_cat), size = .5) +
+  geom_jitter() +
   coord_sf() +
-  labs(title = "West Coast Embracing Alternative fuel than the East ?",
+  labs(title = "America Yet to Fully Embrace Hydrogen fuel",
        subtitle = "Alternative Fuel Stations in the US",
-       caption = "Data from tidytuesday | map by jewel",
+       caption = "Data from US Dot | map by jewel",
        x = NULL,
        y = NULL) +
   scale_colour_brewer(palette = "Set1") +
+  scale_x_continuous(expand = expansion(0)) + 
+  guides(size = "none") +
+  guides(color = guide_legend(frame.color ="#bee0ec",
+                              label.position = "left",
+                              override.aes = list(size = 5))) +
+  theme(plot.background = element_rect(fill = "#bee0ec"),
+        plot.title = element_text(colour = "black", size = 16, face = "bold",family = "Amaranth"),
+        plot.title.position = "plot",
+        plot.subtitle = element_text(size = 12, face = "bold.italic"),
+        plot.caption = element_text(colour = "black", face = "bold"),
+        panel.background = element_rect(fill = "#bee0ec"),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid = element_blank(),
+        legend.position   = "top",
+        legend.direction  = "horizontal",
+        legend.background = element_blank(),
+        legend.title = element_blank(),
+        legend.text.align = 0)
 
-theme(plot.background = element_rect(fill = "#bee0ec"),
-      plot.title = element_text(colour = "black", size = 15, face = "bold",family = "Amaranth"),
-      plot.title.position = "plot",
-      plot.subtitle = element_text(size = 12, face = "bold.italic"),
-      plot.caption = element_text(colour = "black", face = "bold"),
-      panel.background = element_rect(fill = "#bee0ec"),
-      axis.text = element_blank(),
-      axis.ticks = element_blank(),
-      panel.grid = element_blank(),
-      legend.position = "top",
-      legend.box = "horizontal",
-      legend.title = element_blank(),
-      legend.box.background = element_rect(fill = "#bee0ec"),
-      legend.background = element_rect(fill = "#bee0ec")
-      ) 
- 
+ggsave("alternative_fuel.png", plot = af_plot, height = 15, width = 20)
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
 
 
   
-?MetBrewer::colorblind_palettes
-
-
 
