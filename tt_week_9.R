@@ -105,7 +105,7 @@ af_plot <- ggplot() +
         legend.title = element_blank(),
         legend.text.align = 0)
 
-ggsave("alternative_fuel.png", plot = af_plot, height = 15, width = 20)
+ggsave("alternative_fuel.png", plot = af_plot, height = 11, width = 13)
 
       
       
